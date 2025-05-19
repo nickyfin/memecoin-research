@@ -15,3 +15,6 @@ A research tool analyzing public Twitter data for cryptocurrency trend patterns.
 git clone https://github.com/nickyfin/memecoin-research.git
 cd memecoin-research
 pip install tweepy python-dotenv
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 nickyfin
