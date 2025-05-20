@@ -1,3 +1,6 @@
+import time  # <-- Add this if not present
+import tweepy
+from dotenv import load_dotenv
 def track(self, coins=["WIF", "BONK"]):
     """Analyze Twitter trends with full error handling"""
     for coin in coins:
