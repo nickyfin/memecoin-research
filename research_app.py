@@ -2,7 +2,6 @@ import os
 import tweepy
 from dotenv import load_dotenv
 
-# Load environment variables (API keys)
 load_dotenv()
 
 class MemecoinTracker:
@@ -13,14 +12,14 @@ class MemecoinTracker:
         )
     
     def track(self, coins=["WIF", "BONK"]):
-        """Track Twitter mentions of Solana memecoins"""
+        """Analyze Twitter trends for Solana memecoins"""
         for coin in coins:
             tweets = self.twitter.search_recent_tweets(
                 query=f"${coin} lang:en -is:retweet",
-                max_results=10  # Start small to avoid rate limits
+                max_results=50,
+                tweet_fields=["created_at"]
             )
-            print(f"${coin} mentions (last 7 days): {len(tweets.data)}")
+            print(f"${coin}: {len(tweets.data)} mentions")
 
 if __name__ == "__main__":
-    tracker = MemecoinTracker()
-    tracker.track()
+    MemecoinTracker().track()
