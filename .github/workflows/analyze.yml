@@ -1,0 +1,15 @@
+name: Daily Analysis
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Runs at noon UTC daily
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -r requirements.txt
+      - run: python research_app.py >> trends.log
+      - uses: actions/upload-artifact@v3
+        with:
+          name: trend-report
+          path: trends.log
