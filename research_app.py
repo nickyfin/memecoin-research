@@ -1,31 +1,19 @@
-import os
-import tweepy
-from dotenv import load_dotenv
-import time  # Added for rate limiting
-
-load_dotenv()
-
-class MemecoinTracker:
-    def __init__(self):
-        self.twitter = tweepy.Client(
-            bearer_token=os.getenv("TWITTER_BEARER_TOKEN"),
-            wait_on_rate_limit=True
-        )
-    
-    def track(self, coins=["WIF", "BONK"]):
-        """Analyze Twitter trends for Solana memecoins (Twitter API-compliant)"""
+def track(self, coins=["WIF", "BONK"]):
+    """Analyze Twitter trends for Solana memecoins"""
+    for coin in coins:
         try:
-            for coin in coins:
-                tweets = self.twitter.search_recent_tweets(
-                    query=f"${coin} lang:en -is:retweet",
-                    max_results=50,
-                    tweet_fields=["created_at"]
-                )
-                print(f"${coin}: {len(tweets.data)} mentions (last 7 days)")
-                time.sleep(2)  # Avoid rate limits
+            tweets = self.twitter.search_recent_tweets(
+                query=f"${coin} lang:en -is:retweet",
+                max_results=50,
+                tweet_fields=["created_at"]
+            )
+            print(f"${coin}: {len(tweets.data)} mentions")
+            
         except tweepy.TooManyRequests:
-            print("Hit Twitter rate limit - wait 15 minutes")
-            time.sleep(900)
-
-if __name__ == "__main__":
-    MemecoinTracker().track()
+            print(f"Rate limit hit for ${coin}. Waiting 15 minutes...")
+            time.sleep(900)  # Twitter's rate limit window
+            
+        except Exception as e:
+            print(f"Error tracking ${coin}: {str(e)}")
+            
+        time.sleep(2)  # Delay between coin checks
