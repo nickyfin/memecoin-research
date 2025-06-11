@@ -24,7 +24,12 @@ class MemecoinTracker:
                     max_results=50,
                     tweet_fields=["created_at"]
                 )
-                print(f"${coin}: {len(tweets.data)} mentions")
+                
+                # Check if data exists before accessing it
+                if tweets.data:
+                    print(f"${coin}: {len(tweets.data)} mentions")
+                else:
+                    print(f"${coin}: 0 mentions")
                 
             except tweepy.TooManyRequests:
                 # Twitter rate limit hit
